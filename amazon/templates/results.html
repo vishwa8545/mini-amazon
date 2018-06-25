@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{ results|length }} results for {{ query }} </h1>
+{% for r in results %}
+<h2> {{ r.name }}</h2>
+<p>  {{ r.desc }}</p>
+<p>  {{ r.price }}</p>
+{% endfor %}
+</body>
+</html>

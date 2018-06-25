@@ -8,19 +8,19 @@
 </head>
 <body>
 
-<form action="/home" method="GET">
+<form action="/api/product" method="GET">
     <h1>Search a product</h1>
     <input type="text"  name="product_name" placeholder="Name" required><br>
                 <input type="submit" value="submit">
 </form>
 
  <h1> ADD PRODUCTS</h1>
-<form action="/home" method="POST">
+<form action="/api/product" method="POST">
 
     <input type="text" name="op_type" value="insert" hidden>
-    <input type="text"  name="product_name" placeholder="Name" required><br>
-    <input type="text" name="product_disc" placeholder="disc" required><br>
-    <input type="number"  name="product_price" placeholder="price">
+    <input type="text"  name="name" placeholder="Name" required><br>
+    <input type="text" name="disc" placeholder="disc" required><br>
+    <input type="number"  name="price" placeholder="price">
     <input type="submit" value="ADD">
 
 
@@ -28,7 +28,7 @@
 
 
 <h3>update a product</h3>
-<form  action="/home" method="POST">
+<form  action="/api/product" method="POST">
 
     <input type="text" name="op_type" value="update" hidden>
     <input type="text"  name="name" placeholder="name" required><br>
