@@ -5,17 +5,18 @@
     <title>Title</title>
 </head>
 <body>
-<h1>{{ results|length }} results for {{ query }} </h1>
+<h1>{{ results|length }} products in {{ name }}'s cart </h1>
 {% for r in results %}
 <h2> {{ r.name }}</h2>
 <p>  {{ r.desc }}</p>
 <p>  {{ r.price }}</p>
 <form action="/api/cart" method="POST">
-    <input type="text" name="op_type" value="add" hidden>
+    <input type="text" name="op_type" value="delete" hidden>
     <input type="text" name="product_id" value= "{{ r._id }}" hidden>
-    <input type="submit" name="submit" value="add_to_cart" >
+    <input type="submit" name="submit" value="REMOVE" >
 
 </form>
 {% endfor %}
+
 </body>
 </html>

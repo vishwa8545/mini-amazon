@@ -5,11 +5,16 @@
     <title>Title</title>
 </head>
 <body>
+<h1> {{ name }}</h1>
 <form action="/api/product" method="GET">
     <h1>Search a product</h1>
     <input type="text"  name="product_name" placeholder="Name" required><br>
                 <input type="submit" value="submit">
 </form>
-
+<form action="/api/cart" method="POST">
+    <input type="text" name="op_type" value="retrive" hidden>
+    <input type="submit" value="view cart" >
+</form>
+<a href="/logout" >logout</a>
 </body>
 </html>
