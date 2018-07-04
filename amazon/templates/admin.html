@@ -10,7 +10,7 @@
 <h1>{{ massage}}</h1>
 <form action="/api/product" method="GET">
     <h1>Search a product</h1>
-    <input type="text"  name="product_name" placeholder="Name" required><br>
+    <input type="text"  name="name" placeholder="Name" required><br>
                 <input type="submit" value="submit">
 </form>
 
@@ -26,18 +26,6 @@
 
 </form>
 
-
-<h3>update a product</h3>
-<form  action="/api/product" method="POST">
-
-    <input type="text" name="op_type" value="update" hidden>
-    <input type="text"  name="name" placeholder="name" required><br>
-    <input type="text" name="disc" placeholder="disc" required><br>
-    <input type="number"  name="price" placeholder="price">
-    <input type="submit" value="update">
-
-
-</form>
 
 
 </body>

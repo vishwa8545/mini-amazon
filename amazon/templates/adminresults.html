@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>{{ results|length }} results for {{ query }} </h1>
+{% for r in results %}
+<h2> {{ r.name }}</h2>
+<p>  {{ r.desc }}</p>
+<p>  {{ r.price }}</p>
+<form action="/api/product" method="POST">
+    <input type="text" name="op_type" value="delete" hidden>
+    <input type="text" name="product_id" value= "{{ r._id }}" hidden>
+    <input type="submit" name="submit" value="DELETE" >
+
+
+</form>
+<h3>update a product</h3>
+<form  action="/api/product" method="POST">
+
+    <input type="text" name="op_type" value="update" hidden>
+    <input type="text" name="product_id" value="{{ r._id }}" hidden>
+    <input type="text"  name="name" placeholder="newname" required><br>
+    <input type="text" name="disc" placeholder="newdisc" required><br>
+    <input type="number"  name="price" placeholder="newprice">
+    <input type="submit" value="UPDATE">
+
+
+</form>
+{% endfor %}
+
+</body>
+</html>

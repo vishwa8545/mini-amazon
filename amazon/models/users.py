@@ -81,3 +81,22 @@ def retrive_cart(user_id):
         return cursor[0]['cart']
     else:
         return False
+
+def remove_cart(user_id,product_id):
+    condition = {'_id': ObjectId(user_id)}
+
+    cursor = db['users'].find(condition)
+    if cursor.count() == 1:
+        user_data = cursor[0]
+
+    else:
+        return False
+    print(user_data['cart'])
+    user_data['cart'].remove(product_id)
+    cursor = db['users'].update_one(filter= condition,update={'$set':user_data})
+    if cursor:
+        cart = retrive_cart(user_id)
+        return cart
+    else:
+        return False
+
