@@ -12,6 +12,7 @@ def product():
         }
         matching_product =products.search_one(query)
         query = request.args['name']
+
         return render_template('adminresults.html',query=query,results=matching_product)
 
 
@@ -97,9 +98,15 @@ def logout():
 
 @app.route('/api/user', methods=['GET' , 'POST'])
 def user():
-    if request.method == 'POST':
+    if request.method == 'GET':
+        query = {
+        'name': request.args['name']
+        }
+        matching_product = products.search_one(query)
+        query = request.args['name']
+        return render_template('results.html', query=query, results=matching_product)
 
-
+    elif request.method == 'POST':
         if request.form['op_type'] == 'insert':
             name = request.form['name']
             username = request.form['username']
@@ -131,6 +138,14 @@ def user():
                     return render_template('home.html', name = user['name'])
             else:
                 return render_template('user.html', massage = 'invalid username/passsword')
+    elif request.method == 'GET':
+        query = {
+            'name': request.args['name']
+        }
+        matching_product = products.search_one(query)
+        query = request.args['name']
+
+        return render_template('results.html', query=query, results=matching_product)
 
 
 @app.route('/api/cart',methods =['POST'])
