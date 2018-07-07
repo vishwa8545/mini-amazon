@@ -9,6 +9,7 @@ def search_one(name):
     return list(maches)
 
 def get_detais(p_id):
+
     cursor = db['products'].find(p_id)
     if cursor.count() == 1:
         return cursor[0]

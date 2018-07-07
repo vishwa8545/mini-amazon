@@ -25,7 +25,7 @@ def product():
         if request.form['op_type'] == 'insert':
             name = request.form['name']
             disc = request.form['disc']
-            price = request.form['price']
+            price = int(request.form['price'])
 
             prod = {
                 'name': name,
@@ -40,23 +40,18 @@ def product():
                 return render_template( 'admin.html',massage = 'product not added')
 
         if request.form['op_type'] == 'update':
-            name = request.form['name']
-            disc = request.form['disc']
-            price = request.form['price']
-
-            prod = {
-                'name': name,
-                'desc': disc,
-                'price': price
-            }
             product_id = request.form['product_id']
+            updates = {}
+            if request.form['name'] != '':
+
+                updates['name'] = request.form['name']
+            if request.form['disc']!='':
+                updates['desc'] = request.form['disc']
+            if request.form['price']!='':
+                updates['price'] = request.form['price']
             filter = product_id
 
-            updates = {
-                'name':name,
-                'desc':disc,
-                'price':price
-            }
+
 
             update = {
                 '$set':updates
@@ -81,9 +76,15 @@ def product():
 @app.route('/' , methods=['GET'])
 def index():
     if 'user_id' in session:
-
         name = users.search_by_user_id(session['user_id'])
-        return render_template('home.html',name=name['name'])
+        if 'is_admin' in session is session['is_admin']:
+
+            return render_template('admin.html', name=name['name'])
+        else:
+            return render_template('home.html', name=name['name'])
+
+
+
     else:
         return render_template('user.html',massage ='10% off on paypal payments')
 @app.route('/admin' , methods=['GET'])
@@ -113,9 +114,14 @@ def user():
             password = request.form['password']
             sucess =users.signup(name,username,password)
             if sucess:
+                user = users.search_by_name(username)
+                session['user_id'] = str(user['_id'])
                 if username == 'admin':
-                    user = users.search_by_name(username)
-                    session['user_id'] = str(user['_id'])
+
+                    if username == 'admin':
+                        session['is_admin'] = True
+                    else:
+                        session['is_admin'] = False
                     return render_template('admin.html', massage = "wellcome admin")
                 else:
                     return render_template('home.html', massage = 'the signup was successfull')
@@ -130,6 +136,12 @@ def user():
                 if username == 'admin':
                     user = users.search_by_name(username)
                     session['user_id'] = str(user['_id'])
+                    if username == 'admin':
+
+                        if username == 'admin':
+                            session['is_admin'] = True
+                        else:
+                            session['is_admin'] = False
                     return render_template('admin.html', massage="wellcome admin")
 
                 else:
@@ -164,11 +176,14 @@ def cart():
         user_id = session['user_id']
         product_ids = users.retrive_cart(user_id)
         cart = []
+        total =0
         name = users.search_by_user_id(user_id)
         for p_id in product_ids:
             product_id = {'_id':ObjectId(p_id)}
-            cart.append(products.get_detais(product_id))
-        return render_template('cart.html', results =cart,name = name['name'])
+            cart_item = products.get_detais(product_id)
+            cart.append(cart_item)
+            total += cart_item['price']
+        return render_template('cart.html', results =cart,name = name['name'],total = total)
     if op_type == 'delete':
         user_id = session['user_id']
         product_id = request.form['product_id']
